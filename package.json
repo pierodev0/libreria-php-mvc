@@ -1,0 +1,31 @@
+{
+  "name": "bienesraices",
+  "version": "1.0.0",
+  "description": "Bienes Raices - Curso Desarrollo web Completo",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "css": "npx tailwindcss -i ./src/css/index.css -o ./public/css/index.css --watch",
+    "gulp": "gulp",
+    "dev": "concurrently --kill-others \"pnpm run gulp\" \"pnpm run css\""
+  },
+  "author": "Juan De la torre @codigoconjuan",
+  "license": "ISC",
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.22.3",
+    "concurrently": "^9.1.2",
+    "glob": "^10.3.12",
+    "gulp": "^5.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-terser": "^2.1.0",
+    "prettier": "^3.4.2",
+    "sass": "^1.75.0",
+    "sharp": "^0.33.3"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "tailwindcss": "^4.0.0"
+  }
+}

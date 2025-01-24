@@ -1,0 +1,26 @@
+{
+    "name": "piero/template-mvc",
+    "authors": [
+        {
+            "name": "Piero Dev",
+            "email": "pierodev21@gmail.com"
+        }
+    ],
+    "require": {
+        "intervention/image": "^3.11",
+        "phpmailer/phpmailer": "^6.9",
+        "eftec/bladeone": "^4.17"
+    },
+    "scripts": {
+        "dev": "php -S localhost:3000 -t public"
+    },
+    "autoload": {
+        "psr-4": {
+            "Model\\":"./models",
+            "MVC\\":"./",
+            "Controllers\\":"./controllers",            
+            "Helpers\\":"./helpers"
+        }
+    }
+    
+}
