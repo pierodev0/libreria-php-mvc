@@ -1,9 +1,9 @@
 @extends('layouts.app') <!-- Extiende el layout base -->
 
-@section('title', 'Inicio') <!-- Define el título específico -->
+@section('title', 'Crear cuenta') <!-- Define el título específico -->
 
 @section('content')
-    <form action="/login" class="space-y-4" method="post">
+    <form action="/crear" class="space-y-4" method="post">
         <div class="space-y-4">
             <div class="flex flex-col md:flex-row items-start gap-2 md:items-center">
                 <label for="" class="">
@@ -18,6 +18,6 @@
                 <input type="password" placeholder="Type here" class="input input-bordered w-full " name="password"/>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary w-full sm:w-auto">Login</button>
+        <button type="submit" class="btn btn-primary w-full sm:w-auto">Crear</button>
     </form>
 @endsection

@@ -9,14 +9,24 @@ class ActiveRecord
     protected static $columnasDB = [];
     protected static $tabla = '';
 
-
-    //Errores
-    protected static $errores = [];
+    // Alertas y Mensajes
+    protected static $alertas = [];
 
     //Definir la conexion a la base de datos
     public static function setDB($database)
     {
         self::$db = $database;
+    }
+
+    public static function setAlerta($tipo, $mensaje)
+    {
+        static::$alertas[$tipo][] = $mensaje;
+    }
+
+    // Validación
+    public static function getAlertas()
+    {
+        return static::$alertas;
     }
 
 
@@ -49,7 +59,7 @@ class ActiveRecord
     {
         //Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
-        
+
 
         $valores = [];
         foreach ($atributos as $key => $value) {
@@ -87,15 +97,11 @@ class ActiveRecord
         return $sanitizado;
     }
 
-    //Validacion
-    public static function getErrores()
-    {
-        return static::$errores;
-    }
+    
 
 
     public function validar()
-    {        
+    {
         static::$errores = [];
         return static::$errores;
     }
@@ -145,10 +151,21 @@ class ActiveRecord
         return array_shift($resultado);
     }
 
-    public static function where($column,$value)
+    public static function rawSQl($query)
+    {
+        $resultado = self::consultarSQL($query);
+
+        if (count($resultado) == 1) {
+            return array_shift($resultado);
+        } else {
+            return $resultado;
+        }
+    }
+
+    public static function where($column, $value)
     {
         $tabla = static::$tabla;
-        
+
         $column = self::$db->escape_string($column);
         $value = self::$db->escape_string($value);
 
@@ -171,6 +188,8 @@ class ActiveRecord
 
     public static function consultarSQL($query): array
     {
+
+        prettyPrint($query, 1);
         //Consultar la base de datos
         $resultado = self::$db->query($query);
         //Iterar los resultados

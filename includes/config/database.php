@@ -3,7 +3,7 @@ function conectarDB() : mysqli{
     $host = 'localhost';
     $user = 'root';
     $pass = '';
-    $db_name = 'bienes_1';
+    $db_name = 'libreria_mvc';
 
     try {
         $db = new mysqli($host, $user, $pass, $db_name);

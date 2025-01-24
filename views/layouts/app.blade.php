@@ -6,19 +6,16 @@
     <title>@yield('title', 'Mi Aplicación')</title>
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 </head>
-<body>
+<body class="flex flex-col min-h-screen"">
     <header>
-        <h1 class="text-3xl bg-blue-500 text-white">Mi Aplicación</h1>
-        {{-- @include('partials.navbar') <!-- Ejemplo de incluir un partial --> --}}
+        @include('partials.navbar') 
     </header>
 
-    <main>
+    <main class="flex-1 wrapper">
         @yield('content') 
     </main>
 
-    <footer>
-        <p>&copy; {{ date('Y') }} Mi Aplicación</p>
-    </footer>
+    @include('partials.footer')
     <script src="{{ asset("/build/js/bundle.min.js") }}"></script>
 </body>
 </html>

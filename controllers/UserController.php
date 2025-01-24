@@ -2,8 +2,11 @@
 
 namespace Controllers;
 
+use Helpers\Auth;
+use Helpers\Hash;
 use Helpers\Request;
 use Model\Admin;
+use Model\User;
 use MVC\Router;
 
 class UserController
@@ -11,36 +14,40 @@ class UserController
 
     public static function login(Router $router)
     {
-        $errores = Admin::getErrores();
-        if (Request::isMethod('post')) {
-            $auth = new Admin($_POST);
+        $alertas = User::getAlertas();
 
-            $errores = $auth->validar();
+        if (isMethod('POST')) {
+            $auth = new User($_POST);
+            $alertas = $auth->validar();
 
-            if (empty($errores)) {
-
-                //Veriicar que el usuario exista
-                $resultado = $auth->existeUsuario();
-
-                if (!$resultado) {
-                    //Verificar si el usuario existe (mensaje de error)
-                    $errores = Admin::getErrores();
+            if (empty($alertas)) {
+                if (Auth::attempt(['email' => $auth->email, 'password' => $auth->password])) {
+                     User::setAlerta("exito", "Paso la validacion");
                 } else {
-                    //Verificar el password
-                    $autenticado = $auth->comprobarPassword($resultado);
-
-                    if ($autenticado) {
-                        //Autenticar el usuario
-                        $auth->autenticar();
-                        redirect("/admin");
-                    } else {
-                        //Password incorrecto (mensaje de error)
-                        $errores = Admin::getErrores();
-                    }
+                    User::setAlerta("error", "Credenciales incorrectas");
                 }
             }
         }
-        $router->render("auth/login", compact('errores'));
+        $alertas = User::getAlertas();
+        prettyPrint($alertas);
+        echo $router->render("auth/login", compact('alertas'));
+    }
+
+
+    public static function crear(Router $router)
+    {
+
+
+        if (isMethod('post')) {
+            $auth = new User($_POST);
+            $auth->password = Hash::make($auth->password);
+            $resultado = $auth->crear();
+            if ($resultado) {
+                redirect("/login");
+            }
+        }
+
+        echo $router->render('auth/crear');
     }
 
 

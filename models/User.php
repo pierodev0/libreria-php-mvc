@@ -4,7 +4,7 @@ namespace Model;
 
 class User extends ActiveRecord
 {
-    protected static $tabla = 'usuarios';
+    protected static $tabla = 'users';
     protected static $columnasDB = ['id', 'email', 'password',];
     public $id;
     public $email;
@@ -20,15 +20,15 @@ class User extends ActiveRecord
     public function validar()
     {
         if (!$this->email) {
-            self::$errores[] = "El correo es obligatorio";
+            self::$alertas[] = "El correo es obligatorio";
         }
         if (!$this->password) {
-            self::$errores[] = "El password es obligatorio";
+            self::$alertas[] = "El password es obligatorio";
         }
         if ($this->password && strlen($this->password) < 6) {
-            self::$errores[] = "El password debe tener al menos 6 caracteres";
+            self::$alertas[] = "El password debe tener al menos 6 caracteres";
         }
-        return self::$errores;
+        return self::$alertas;
     }
 
 
@@ -38,7 +38,7 @@ class User extends ActiveRecord
         $resultado = self::where('email', $this->email);
 
         if (!$resultado) {
-            self::$errores[] = "El usuario no existe";
+            self::$alertas[] = "El usuario no existe";
             return;
         }
 
@@ -50,7 +50,7 @@ class User extends ActiveRecord
         $autenticado =  password_verify($this->password, $resultado->password);
 
         if (!$autenticado) {
-            self::$errores[] = "El password es incorrecto";
+            self::$alertas[] = "El password es incorrecto";
         }
         return  $autenticado;
     }
@@ -63,6 +63,20 @@ class User extends ActiveRecord
         $_SESSION['login'] = true;
     }
 
+    public static function attempt($args = []){
+        $campos = "";
+        foreach($args as $column => $value){
+            $campos .= " {$column} = '{$value}' AND";
+        }
+        $campos = rtrim($campos, " AND");
+
+        $resultado = self::rawSQl("SELECT * FROM users WHERE {$campos} LIMIT 1");
+     
+    }
+
+    
+
+    
 
    
 }

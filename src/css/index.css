@@ -1,2 +1,7 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
+
+@utility wrapper {
+    @apply p-2 w-[90%] mx-auto
+}

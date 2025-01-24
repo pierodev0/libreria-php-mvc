@@ -12,7 +12,7 @@
         "eftec/bladeone": "^4.17"
     },
     "scripts": {
-        "dev": "php -S localhost:3000 -t public"
+        "dev": ["Composer\\Config::disableProcessTimeout","php -S localhost:3000 -t public"]
     },
     "autoload": {
         "psr-4": {

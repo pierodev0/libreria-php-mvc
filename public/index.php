@@ -19,6 +19,11 @@ $router = new Router();
 //Login y autenticacion de usuarios
 $router->get("/login",[UserController::class,'login']);
 $router->post("/login",[UserController::class,'login']);
+
+//Login y autenticacion de usuarios
+$router->get("/crear",[UserController::class,'crear']);
+$router->post("/crear",[UserController::class,'crear']);
+
 $router->get("/logout",[UserController::class,'logout']);
 
 
