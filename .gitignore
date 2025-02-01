@@ -5,4 +5,3 @@ php_error_log
 vendor/
 public/img/
 public/css/
-cache/
