@@ -1,19 +1,16 @@
-<div class="navbar bg-base-100">
+<div class="navbar bg-base-100 container mx-auto">
     <div class="flex-1">
-      <a class="btn btn-ghost text-xl">Libreria</a>
+        <a class="btn btn-ghost text-xl" href="/">Libreria</a>
     </div>
     <div class="flex-none">
-      <ul class="menu menu-horizontal px-1">
-        <li><a>Link</a></li>
-        <li>
-          <details>
-            <summary>Parent</summary>
-            <ul class="bg-base-100 rounded-t-none p-2">
-              <li><a>Link 1</a></li>
-              <li><a>Link 2</a></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
+        <ul class="flex gap-2">
+            @if (Helpers\Session::get('login'))
+                <li class="btn btn-ghost"><a href="/login">Perfil</a></li>
+                <li class="btn "><a href="/logout">Log out</a></li>
+            @else
+                <li class="btn btn-ghost"><a href="/login">Login</a></li>
+                <li class="btn btn-primary"><a href="/register">Register</a></li>
+            @endif
+        </ul>
     </div>
-  </div>
+</div>

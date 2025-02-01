@@ -18,7 +18,7 @@ class ActiveRecord
         self::$db = $database;
     }
 
-    public static function setAlerta($tipo, $mensaje)
+    public static function setAlerta($tipo = "error", $mensaje )
     {
         static::$alertas[$tipo][] = $mensaje;
     }
@@ -102,8 +102,8 @@ class ActiveRecord
 
     public function validar()
     {
-        static::$errores = [];
-        return static::$errores;
+        static::$alertas = [];
+        return static::$alertas;
     }
 
     public function setImagen($imagen)
@@ -189,7 +189,6 @@ class ActiveRecord
     public static function consultarSQL($query): array
     {
 
-        prettyPrint($query, 1);
         //Consultar la base de datos
         $resultado = self::$db->query($query);
         //Iterar los resultados

@@ -127,6 +127,12 @@ function redirect($url, $statusCode = 302) {
 }
 
 
+function safeJsonEncode($array) {
+  // Use json_encode to convert the array to JSON and escape special characters
+  return json_encode($array, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+}
+
+
 ini_set('display_errors', 1);
 ini_set("log_errors", 1);
 ini_set("error_log", dirname(__FILE__, 2)  . "/php_error_log");

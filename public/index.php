@@ -1,12 +1,8 @@
 <?php
 
+use Controllers\DashboardController;
 use Controllers\HomeController;
-use Controllers\LoginController;
-use Controllers\PaginasController;
-use Controllers\PropiedadController;
 use Controllers\UserController;
-use Controllers\VendedorController;
-use eftec\bladeone\BladeOne;
 use MVC\Router;
 
 require_once __DIR__ . '/../includes/app.php';
@@ -21,10 +17,12 @@ $router->get("/login",[UserController::class,'login']);
 $router->post("/login",[UserController::class,'login']);
 
 //Login y autenticacion de usuarios
-$router->get("/crear",[UserController::class,'crear']);
-$router->post("/crear",[UserController::class,'crear']);
-
+$router->get("/register",[UserController::class,'register']);
+$router->post("/register",[UserController::class,'register']);
 $router->get("/logout",[UserController::class,'logout']);
+
+//Dashboard
+$router->get("/dashboard",[DashboardController::class,'index']);
 
 
 //Pagina no encontrada

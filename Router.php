@@ -28,11 +28,24 @@ class Router
 
       $auth = $_SESSION['login'] ?? false;
 
-      //Arreglo de rutas protegidas;
-      $rutas_protegidas = ['/admin'];
-
       $urlActual =  $_SERVER['REQUEST_URI'] ?? '/';
       $metodo = $_SERVER['REQUEST_METHOD'];
+
+      //Arreglo de rutas protegidas;
+      // $rutas_protegidas = ['/dashboard'];
+
+      $rutas_protegidas = [
+         '/dashboard',
+      ];
+
+      $mi_url = explode('/', $urlActual);
+      $mi_url_auth = '/' . $mi_url[1];
+
+      if (in_array($mi_url_auth, $rutas_protegidas) && !$auth) {
+         header('Location: /');
+      }
+
+
 
       if ($metodo === 'GET') {
          $urlActual = explode('?', $urlActual)[0];
@@ -42,9 +55,9 @@ class Router
          $fn = $this->rutasPOST[$urlActual] ?? null;
       }
 
-      if (in_array($urlActual, $rutas_protegidas) && !$auth) {
-         redirect('/login');
-      }
+      // if (in_array($urlActual, $rutas_protegidas) && !$auth) {
+      //    redirect('/login');
+      // }
 
       if ($fn) {
          if (is_callable($fn)) {
@@ -60,12 +73,24 @@ class Router
    //Mostra una vista
    public function render($view = "", $datos = [])
    {
+      if (!file_exists(__DIR__ . '/views/' . $view . '.blade.php')) {
+         echo "No existe la vista " . $view;
+         exit;
+      }
+
       $view = str_replace('/', DIRECTORY_SEPARATOR, $view);
+      
 
       $views = __DIR__ . '/views';
+
+
       $cache = __DIR__ . '/cache';
+
+      $blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
+
+      $blade->setAliasClasses(['Session'=>'Helpers\Session']);
       
-      $blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG); 
-      return $blade->run($view, $datos); 
+      echo $blade->run($view, $datos);
+      exit;
    }
 }
